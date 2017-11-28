@@ -24,9 +24,21 @@ public:
 	/// @param deltaTime the elapsed time in seconds
 	/// @return void
 	virtual void update(float deltaTime);
+	void applyForce(Vector2 force);
+	void thrust();
+	void turn(float a);
 
 private:
 	/* add your private declarations */
+	Vector2 velocity;
+	Vector2 acceleration;
+	Vector2 force;
+	float damping;
+	float topspeed;
+	float heading;
+	float angle;
+	float r;
+	
 };
 
 #endif
