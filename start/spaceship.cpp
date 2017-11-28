@@ -1,23 +1,23 @@
 /**
- * This class describes MyEntity behavior.
+ * The class of the spaceship.
  *
- * Copyright 2015 Your Name <you@yourhost.com>
+ * Copyright 2017 Julia Lameijer
  */
 
-#include "myentity.h"
+#include "spaceship.h"
 
-MyEntity::MyEntity() : Entity()
+SpaceShip::SpaceShip() : Entity()
 {
-	this->addSprite("assets/square.tga");
-	this->sprite()->color = RED;
+	this->addSprite("assets/spaceship.tga");
+	
 }
 
-MyEntity::~MyEntity()
+SpaceShip::~SpaceShip()
 {
 
 }
 
-void MyEntity::update(float deltaTime)
+void SpaceShip::update(float deltaTime)
 {
 	// ###############################################################
 	// Rotate
