@@ -19,10 +19,14 @@ MyScene::MyScene() : Scene()
 	spaceship = new SpaceShip();
 	spaceship->scale = Point2(0.5, 0.5);
 	spaceship->position = Point2(SWIDTH/2, SHEIGHT/2);
+	enemy = new Enemy();
+
+
 
 	// create the scene 'tree'
 	// add myentity to this Scene as a child.
 	this->addChild(spaceship);
+	this->addChild(enemy);
 }
 
 
