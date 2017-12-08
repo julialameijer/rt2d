@@ -12,8 +12,6 @@ Enemy::Enemy() : Entity()
 	this->position = Point2(SWIDTH / 2, SHEIGHT / 2);
 	this->velocity = Vector2(0, 0);
 	this->acceleration = Vector2(0, 0);
-	damping = 0.995;
-	topspeed = 5000;
 	heading = 0;
 	r = 16;
 }
@@ -32,7 +30,6 @@ void Enemy::update(float deltaTime)
 	}
 
 	this->velocity += acceleration;
-	this->velocity *= damping;
 	this->velocity.limit(topspeed);
 	this->position += velocity;
 	this->acceleration * 0;
@@ -44,16 +41,12 @@ void Enemy::update(float deltaTime)
 
 	float rotspeed = 3.14f;
 
-	static Vector2 velocity = Vector2((rand() % 100) - 50, (rand() % 100) - 50);
+	Vector2 velocity = Vector2((rand() % 100) - 50, (rand() % 100) - 50);
 	static Polar polar = Polar((rand() % 360) * DEG_TO_RAD, 400.0f);
 
 	if (input()->getKey(KeyCode::Up)) {
-		velocity += polar.cartesian() * deltaTime; // thrust
+		velocity = polar.cartesian() - acceleration *-1 * 2 * deltaTime; // thrust	
 	}
-	if (input()->getKey(KeyCode::Down)) {
-		velocity = polar.cartesian() * deltaTime; // thrust
-	}
-
 	if (input()->getKey(KeyCode::Right)) {
 		polar.angle += rotspeed * deltaTime; // rotate right
 	}
@@ -63,19 +56,6 @@ void Enemy::update(float deltaTime)
 
 	this->rotation.z = polar.angle;
 	this->position += velocity * deltaTime;
-}
-void Enemy::applyForce(Vector2 force)
-{
-	acceleration.operator+=(force);
-}
-void Enemy::turn(float a)
-{
-	heading += a;
-}
-void Enemy::thrust()
-{
-
-
 }
 
 

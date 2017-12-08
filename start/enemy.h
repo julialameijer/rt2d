@@ -1,10 +1,4 @@
-/**
-* Copyright 2015 Your Name <you@yourhost.com>
-*
-* @file myentity.h
-*
-* @brief description of MyEntity behavior.
-*/
+//Julia Lameijer 2017
 
 #ifndef ENEMY_H
 #define ENEMY_H
@@ -24,9 +18,6 @@ public:
 	/// @param deltaTime the elapsed time in seconds
 	/// @return void
 	virtual void update(float deltaTime);
-	void applyForce(Vector2 force);
-	void thrust();
-	void turn(float a);
 
 private:
 	/* add your private declarations */
