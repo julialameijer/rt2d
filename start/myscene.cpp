@@ -12,21 +12,18 @@
 MyScene::MyScene() : Scene()
 {
 	// start the timer.
-	t.start();
+	t.start(); 
 
 	// create a single instance of MyEntity in the middle of the screen.
 	// the Sprite is added in Constructor of MyEntity.
 	spaceship = new SpaceShip();
 	spaceship->scale = Point2(0.5, 0.5);
 	spaceship->position = Point2(SWIDTH/2, SHEIGHT/2);
-	enemy = new Enemy();
-
-
-
-	// create the scene 'tree'
-	// add myentity to this Scene as a child.
+	enemy = new Enemy(spaceship);
 	this->addChild(spaceship);
 	this->addChild(enemy);
+	enemy->scale = Point2(0.125, 0.125);
+	enemy->position = Point2(SWIDTH / 2,5, SHEIGHT / 2);
 }
 
 
@@ -34,9 +31,10 @@ MyScene::~MyScene()
 {
 	// deconstruct and delete the Tree
 	this->removeChild(spaceship);
-
+	this->removeChild(enemy);
 	// delete myentity from the heap (there was a 'new' in the constructor)
 	delete spaceship;
+	delete enemy;
 }
 
 void MyScene::update(float deltaTime)
@@ -52,10 +50,7 @@ void MyScene::update(float deltaTime)
 	// Spacebar scales myentity
 	// ###############################################################
 	if (input()->getKeyDown(KeyCode::Space)) {
-		spaceship->scale = Point(0.5f, 0.5f);
-	}
-	if (input()->getKeyUp(KeyCode::Space)) {
-		spaceship->scale = Point(1.0f, 1.0f);
+		std::cout << "hello" << std::endl;
 	}
 
 	// ###############################################################

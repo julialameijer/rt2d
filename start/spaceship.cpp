@@ -12,6 +12,7 @@ SpaceShip::SpaceShip() : Entity()
 	this->position = Point2(SWIDTH / 2, SHEIGHT / 2);
 	this->velocity = Vector2(0, 0);
 	this->acceleration = Vector2(0, 0);
+	this->friction = Vector2(-1, -1);
 	heading = 0;
 	r = 16;
 }
@@ -45,7 +46,7 @@ void SpaceShip::update(float deltaTime)
 	static Polar polar = Polar((rand() % 360) * DEG_TO_RAD, 400.0f);
 
 	if (input()->getKey(KeyCode::Up)) {
-		velocity = polar.cartesian() - acceleration *-1 * 2 * deltaTime; // thrust	
+		velocity = polar.cartesian() - acceleration *-1 * 2 * deltaTime; // thrust
 	}
 	if (input()->getKey(KeyCode::Right)) {
 		polar.angle += rotspeed * deltaTime; // rotate right

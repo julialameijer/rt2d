@@ -30,6 +30,7 @@ private:
 	Vector2 velocity;
 	Vector2 acceleration;
 	Vector2 force;
+	Vector2 friction;
 	float damping;
 	float topspeed;
 	float heading;

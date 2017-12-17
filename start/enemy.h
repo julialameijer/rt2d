@@ -4,13 +4,14 @@
 #define ENEMY_H
 
 #include <rt2d/entity.h>
+#include "spaceship.h"
 
 class Enemy : public Entity
 
 {
 public:
 	/// @brief Constructor
-	Enemy();
+	Enemy(SpaceShip *spaceship);
 	/// @brief Destructor
 	virtual ~Enemy();
 
@@ -18,19 +19,19 @@ public:
 	/// @param deltaTime the elapsed time in seconds
 	/// @return void
 	virtual void update(float deltaTime);
+	void addForce(Vector2 force);
 
 private:
 	/* add your private declarations */
-	Vector2 velocity;
-	Vector2 acceleration;
-	Vector2 force;
-	float damping;
+	Vector3 velocity;
+	Vector3 acceleration;
+	Vector3 dir;
+	Vector3 desiredVelocity;
+	Vector3 steering;
+	SpaceShip *spaceship;
 	float topspeed;
-	float heading;
-	float angle;
-	float r;
+	float maxSteeringForce;
 
 };
-
 #endif
 #pragma once
