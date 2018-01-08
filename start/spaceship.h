@@ -9,7 +9,7 @@
 #ifndef SPACESHIP_H
 #define SPACESHIP_H
 
-#include <rt2d/entity.h>
+#include "Entity.h"
 
 class SpaceShip : public Entity
 
@@ -27,10 +27,9 @@ public:
 
 private:
 	/* add your private declarations */
-	Vector2 velocity;
-	Vector2 acceleration;
 	Vector2 force;
-	Vector2 friction;
+	Vector2 acceleration;
+	Vector2 velocity;
 	float damping;
 	float topspeed;
 	float heading;

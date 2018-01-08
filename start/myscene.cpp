@@ -9,6 +9,7 @@
 
 #include "myscene.h"
 
+
 MyScene::MyScene() : Scene()
 {
 	// start the timer.
@@ -29,10 +30,9 @@ MyScene::MyScene() : Scene()
 
 MyScene::~MyScene()
 {
-	// deconstruct and delete the Tree
 	this->removeChild(spaceship);
 	this->removeChild(enemy);
-	// delete myentity from the heap (there was a 'new' in the constructor)
+	
 	delete spaceship;
 	delete enemy;
 }
@@ -44,21 +44,5 @@ void MyScene::update(float deltaTime)
 	// ###############################################################
 	if (input()->getKeyUp(KeyCode::Escape)) {
 		this->stop();
-	}
-
-	// ###############################################################
-	// Spacebar scales myentity
-	// ###############################################################
-	if (input()->getKeyDown(KeyCode::Space)) {
-		std::cout << "hello" << std::endl;
-	}
-
-	// ###############################################################
-	// Rotate color
-	// ###############################################################
-	if (t.seconds() > 0.0333f) {
-		RGBAColor color = spaceship->sprite()->color;
-		spaceship->sprite()->color = Color::rotate(color, 0.01f);
-		t.start();
 	}
 }

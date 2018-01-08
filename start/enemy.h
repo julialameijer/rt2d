@@ -1,4 +1,5 @@
-//Julia Lameijer 2017
+//Julia Lameijer 2017 Header
+
 
 #ifndef ENEMY_H
 #define ENEMY_H
@@ -22,7 +23,8 @@ public:
 	void addForce(Vector2 force);
 
 private:
-	/* add your private declarations */
+
+	/*add your private declarations */
 	Vector3 velocity;
 	Vector3 acceleration;
 	Vector3 dir;
