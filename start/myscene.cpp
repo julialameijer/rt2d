@@ -14,16 +14,13 @@ MyScene::MyScene() : Scene()
 {
 	// start the timer.
 	t.start(); 
-
-	// create a single instance of MyEntity in the middle of the screen.
-	// the Sprite is added in Constructor of MyEntity.
 	spaceship = new SpaceShip();
 	spaceship->scale = Point2(0.5, 0.5);
 	spaceship->position = Point2(SWIDTH/2, SHEIGHT/2);
 	enemy = new Enemy(spaceship);
 	this->addChild(spaceship);
 	this->addChild(enemy);
-	enemy->scale = Point2(0.125, 0.125);
+	enemy->scale = Point2(0.25, 0.25);
 	enemy->position = Point2(SWIDTH / 2,5, SHEIGHT / 2);
 }
 

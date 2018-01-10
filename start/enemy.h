@@ -21,7 +21,8 @@ public:
 	/// @return void
 	virtual void update(float deltaTime);
 	void addForce(Vector2 force);
-
+	Vector3 seek();
+	Vector3 pursue();
 private:
 
 	/*add your private declarations */

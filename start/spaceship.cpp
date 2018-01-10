@@ -26,7 +26,6 @@ void SpaceShip::update(float deltaTime)
 	if (this->rotation.z > TWO_PI) {
 		this->rotation.z -= TWO_PI;
 	}
-	
 	this->velocity += acceleration;
 	this->velocity.limit(topspeed);
 	this->position += velocity;
@@ -41,17 +40,15 @@ void SpaceShip::update(float deltaTime)
 	Vector2 velocity = Vector2((rand() % 100) - 50, (rand() % 100) - 50);
 	static Polar polar = Polar((rand() % 360) * DEG_TO_RAD, 400.0f);
 
-	if (input()->getKey(KeyCode::Up)) {
+	if (input()->getKey(KeyCode::Up) || input()->getKey(KeyCode::W)) {
 		velocity = polar.cartesian() - acceleration *-1 * 2 * deltaTime; // thrust
 	}
-	if (input()->getKey(KeyCode::Right)) {
+	if (input()->getKey(KeyCode::Right) || input()->getKey(KeyCode::D)) {
 		polar.angle += rotspeed * deltaTime; // rotate right
 	}
-	if (input()->getKey(KeyCode::Left)) {
+	if (input()->getKey(KeyCode::Left) || input()->getKey(KeyCode::A)) {
 		polar.angle -= rotspeed * deltaTime; // rotate left
 	}
 	this->rotation.z = polar.angle;
 	this->position += velocity * deltaTime;
 }
-
-
