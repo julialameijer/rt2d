@@ -13,6 +13,7 @@ class Enemy : public Entity
 public:
 	/// @brief Constructor
 	Enemy(SpaceShip *spaceship);
+	
 	/// @brief Destructor
 	virtual ~Enemy();
 
@@ -23,6 +24,7 @@ public:
 	void addForce(Vector2 force);
 	Vector3 seek();
 	Vector3 pursue();
+	std::vector<Enemy*> enemylist;
 private:
 
 	/*add your private declarations */

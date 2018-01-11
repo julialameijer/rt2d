@@ -12,7 +12,7 @@ Enemy::Enemy(SpaceShip *spaceship) : Entity()
 	this->velocity = Vector2(0, 0);
 	this->acceleration = Vector2(-0.001, -0.01);
 	this->spaceship = spaceship;
-	this->topspeed = 0.5;
+	this->topspeed = 0.2;
 	this->maxSteeringForce = 0.3;
 
 }
@@ -22,8 +22,8 @@ Enemy::~Enemy()
 }
 void Enemy::update(float deltaTime)
 {
+	//Turn towards the player
 	this->rotation.z = velocity.getAngle();
-
 	//go after the player
 	addForce(pursue());
 	velocity += acceleration;
@@ -40,6 +40,7 @@ void Enemy::addForce(Vector2 force)
 
 Vector3 Enemy::pursue()
 {
+	//Steering behaviour
 	Vector3 desiredVelocity = spaceship->position - this->position;
 	desiredVelocity = desiredVelocity.getNormalized() * topspeed;
 	float distance = desiredVelocity.getLength();
@@ -50,6 +51,7 @@ Vector3 Enemy::pursue()
 
 Vector3 Enemy::seek() 
 {
+	//Additional steering behaviour
 	Vector3 desiredVelocity = spaceship->position - this->position;
 	desiredVelocity.getLength()  * topspeed;
 	Vector3 steering = desiredVelocity - velocity;

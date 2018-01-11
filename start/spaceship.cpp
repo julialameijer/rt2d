@@ -22,22 +22,28 @@ SpaceShip::~SpaceShip()
 
 void SpaceShip::update(float deltaTime)
 {
+	//Rotation towards future position
 	this->rotation.z += HALF_PI * deltaTime; // 90 deg/sec
 	if (this->rotation.z > TWO_PI) {
 		this->rotation.z -= TWO_PI;
 	}
+	//Movementspeed
 	this->velocity += acceleration;
 	this->velocity.limit(topspeed);
 	this->position += velocity;
 	this->acceleration * 0;
+
+	//Comes back at the other side of the screen after going out
 	if (this->position.x < 0) { this->position.x = SWIDTH; }
 	if (this->position.x > SWIDTH) { this->position.x = 0; }
 	if (this->position.y < 0) { this->position.y = SHEIGHT; }
 	if (this->position.y > SHEIGHT) { this->position.y = 0; }
 
+	//rotation speed
 	float rotspeed = 3.14f;
 
-	Vector2 velocity = Vector2((rand() % 100) - 50, (rand() % 100) - 50);
+
+	//Movement
 	static Polar polar = Polar((rand() % 360) * DEG_TO_RAD, 400.0f);
 
 	if (input()->getKey(KeyCode::Up) || input()->getKey(KeyCode::W)) {

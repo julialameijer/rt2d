@@ -10,7 +10,6 @@
 #define MYSCENE_H
 
 #include <rt2d/scene.h>
-
 #include "spaceship.h"
 #include "enemy.h"
 
@@ -28,12 +27,16 @@ public:
 	/// @return void
 	virtual void update(float deltaTime);
 
+	void setUpGame();
+
 private:
 	/// @brief the rotating square in the middle of the screen
 	SpaceShip* spaceship;
 	Enemy* enemy;
 	/// @brief a Timer to rotate the color every n seconds
 	Timer t;
+	
+	float radius;
 };
 
 #endif /* SCENE00_H */

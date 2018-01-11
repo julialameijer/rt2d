@@ -6,40 +6,59 @@
 
 #include <fstream>
 #include <sstream>
-
 #include "myscene.h"
 
 
 MyScene::MyScene() : Scene()
 {
 	// start the timer.
-	t.start(); 
+	t.start();
 	spaceship = new SpaceShip();
-	spaceship->scale = Point2(0.5, 0.5);
-	spaceship->position = Point2(SWIDTH/2, SHEIGHT/2);
-	enemy = new Enemy(spaceship);
-	this->addChild(spaceship);
-	this->addChild(enemy);
-	enemy->scale = Point2(0.25, 0.25);
-	enemy->position = Point2(SWIDTH / 2,5, SHEIGHT / 2);
+	srand(time(NULL));
+	radius = 1000;
+	setUpGame();
 }
 
 
-MyScene::~MyScene()
-{
+MyScene::~MyScene(){
+	//destructor
 	this->removeChild(spaceship);
-	this->removeChild(enemy);
-	
 	delete spaceship;
-	delete enemy;
+
+	for each(enemy in enemy->enemylist) {
+		this->removeChild(enemy);
+		delete enemy;
+	}
 }
 
 void MyScene::update(float deltaTime)
 {
-	// ###############################################################
-	// Escape key stops the Scene
-	// ###############################################################
 	if (input()->getKeyUp(KeyCode::Escape)) {
 		this->stop();
 	}
+
 }
+
+void MyScene::setUpGame()
+{
+	//The start of the game
+	spaceship->scale = Point2(0.5, 0.5);
+	spaceship->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+	this->addChild(spaceship);
+	
+
+	for (size_t i = 0; i < 3; i++)
+	{
+		enemy = new Enemy(spaceship);
+		this->addChild(enemy);
+		float random = rand() % 360;
+		float angle = random* PI * 100000;
+		enemy->position.x = SWIDTH / 2 + cos(angle)*radius;
+		enemy->position.y = SHEIGHT / 2 + sin(angle)*radius;
+		enemy->scale = Point2(0.5, 0.5);
+		enemy->enemylist.push_back(enemy);
+		std::cout << random << std::endl;
+	}
+
+}
+
