@@ -25,7 +25,7 @@ MyScene::~MyScene(){
 	this->removeChild(spaceship);
 	delete spaceship;
 
-	for each(enemy in enemy->enemylist) {
+	for each(enemy in enemylist) {
 		this->removeChild(enemy);
 		delete enemy;
 	}
@@ -55,10 +55,13 @@ void MyScene::setUpGame()
 		float angle = random* PI * 100000;
 		enemy->position.x = SWIDTH / 2 + cos(angle)*radius;
 		enemy->position.y = SHEIGHT / 2 + sin(angle)*radius;
-		enemy->scale = Point2(0.5, 0.5);
-		enemy->enemylist.push_back(enemy);
+		enemy->scale = Point2(1, 1);
+		enemylist.push_back(enemy);
+		enemy->randomTopspeed();
 		std::cout << random << std::endl;
+
 	}
+		
 
 }
 

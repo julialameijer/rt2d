@@ -22,12 +22,14 @@ public:
 	/// @return void
 	virtual void update(float deltaTime);
 	void addForce(Vector2 force);
+	void seperation();
+	void randomTopspeed();
 	Vector3 seek();
 	Vector3 pursue();
-	std::vector<Enemy*> enemylist;
-private:
+	//std::vector<Enemy*> enemylist;
+	int enemieslength = 5;
 
-	/*add your private declarations */
+private:
 	Vector3 velocity;
 	Vector3 acceleration;
 	Vector3 dir;

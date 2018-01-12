@@ -12,9 +12,10 @@ Enemy::Enemy(SpaceShip *spaceship) : Entity()
 	this->velocity = Vector2(0, 0);
 	this->acceleration = Vector2(-0.001, -0.01);
 	this->spaceship = spaceship;
-	this->topspeed = 0.2;
+	//this->topspeed = 0.2;
 	this->maxSteeringForce = 0.3;
-
+	
+	
 }
 Enemy::~Enemy()
 {
@@ -49,7 +50,14 @@ Vector3 Enemy::pursue()
 	return steering;
 }
 
-Vector3 Enemy::seek() 
+void Enemy::randomTopspeed()
+{
+	float random = rand() % 100;
+	this->topspeed = random / 120;
+	std::cout << topspeed << std::endl;
+
+}
+Vector3 Enemy::seek()
 {
 	//Additional steering behaviour
 	Vector3 desiredVelocity = spaceship->position - this->position;
