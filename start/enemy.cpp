@@ -12,8 +12,9 @@ Enemy::Enemy(SpaceShip *spaceship) : Entity()
 	this->velocity = Vector2(0, 0);
 	this->acceleration = Vector2(-0.001, -0.01);
 	this->spaceship = spaceship;
-	//this->topspeed = 0.2;
-	this->maxSteeringForce = 0.3;
+	this->maxSteeringForce = 0.005;
+	this->topspeed = 0.4;
+	this->seperationStrength = 0.5;
 	
 	
 }
@@ -24,14 +25,34 @@ Enemy::~Enemy()
 void Enemy::update(float deltaTime)
 {
 	//Turn towards the player
-	this->rotation.z = velocity.getAngle();
+	this->rotation.z = velocity.getAngle(); 
+
+	//if (this->position.x >= SWIDTH  || this->position.x <0 || this->position.y <= SHEIGHT ||this->position.x >0) {
+	//	this->seperationStrength = 0;
+	//	std::cout << seperationStrength << std::endl;
+
+	//}
+	//else (this->seperationStrength = 0.5);
+	
+	if (this->position.x < 0) { this->position.x = SWIDTH; }
+	if (this->position.x > SWIDTH) { this->position.x = 0; }
+	if (this->position.y < 0) { this->position.y = SHEIGHT; }
+	if (this->position.y > SHEIGHT) { this->position.y = 0; }
+
 	//go after the player
-	addForce(pursue());
+	steeringForce = Vector3(0,0,0);
+	steeringForce += seperationSteering * 0.5;
+	steeringForce += pursue() * 1;
+	
+	steeringForce.limit(maxSteeringForce);
+	addForce(steeringForce);
 	velocity += acceleration;
 	velocity.normalize();
 	velocity.limit(topspeed);
 	position += velocity;
 	acceleration = Vector2(0, 0);
+
+	
 }
 
 void Enemy::addForce(Vector2 force)
@@ -46,24 +67,54 @@ Vector3 Enemy::pursue()
 	desiredVelocity = desiredVelocity.getNormalized() * topspeed;
 	float distance = desiredVelocity.getLength();
 	Vector3 futurePosition = spaceship->position + spaceship->velocity *distance;
-	Vector3 steering = seek();
+	desiredVelocity.getLength()  * topspeed;
+	seek(futurePosition);
+	Vector3 steering = desiredVelocity - velocity;
 	return steering;
 }
 
-void Enemy::randomTopspeed()
+Vector3 Enemy::separate(std::vector<Enemy*> list)
 {
-	float random = rand() % 100;
-	this->topspeed = random / 120;
-	std::cout << topspeed << std::endl;
-
+	int count = 0;
+	Vector2 sum = Vector2(0, 0);
+	for each (Enemy* e in list) {
+		if (e != this) {
+			Vector2 length = e->position - this->position;
+			if (length.getLength() < 150) {
+				count++;
+				Vector2 diff = this->position - e->position;
+				diff.normalize();
+				sum = sum + diff;
+			}
+			if (count > 0) {
+				sum /= count;
+				steering = sum - velocity;
+				//steering.limit(maxSteeringForce);
+				seperationSteering = steering;
+			}
+		}
+	}
+	return Vector3();
 }
-Vector3 Enemy::seek()
+
+//void Enemy::randomTopspeed()
+//{
+//	float random = rand() % 100;
+//	//std::cout << random << std::endl;
+//	if (random / 120 >= 0.2 && random / 120 <= 0.5) {
+//		this->topspeed = random / 120;
+//		std::cout << topspeed << std::endl;
+//	}
+//	else randomTopspeed();
+//}
+
+Vector3 Enemy::seek(Vector3 target)
 {
 	//Additional steering behaviour
-	Vector3 desiredVelocity = spaceship->position - this->position;
+	Vector3 desiredVelocity = target - this->position;
 	desiredVelocity.getLength()  * topspeed;
 	Vector3 steering = desiredVelocity - velocity;
-	steering.limit(maxSteeringForce);
+	//steering.limit(maxSteeringForce);
 	return steering;
 }
 

@@ -13,9 +13,12 @@ MyScene::MyScene() : Scene()
 {
 	// start the timer.
 	t.start();
+	this->averagePos = Vector2(0, 0);
 	spaceship = new SpaceShip();
 	srand(time(NULL));
+	v = Point2(0, 0);
 	radius = 1000;
+	neighborCount = 0;
 	setUpGame();
 }
 
@@ -36,7 +39,10 @@ void MyScene::update(float deltaTime)
 	if (input()->getKeyUp(KeyCode::Escape)) {
 		this->stop();
 	}
-
+	for each (enemy in enemylist) {
+		enemy->separate(enemylist);
+	}
+	
 }
 
 void MyScene::setUpGame()
@@ -47,7 +53,7 @@ void MyScene::setUpGame()
 	this->addChild(spaceship);
 	
 
-	for (size_t i = 0; i < 3; i++)
+	for (size_t i = 0; i <5; i++)
 	{
 		enemy = new Enemy(spaceship);
 		this->addChild(enemy);
@@ -55,13 +61,9 @@ void MyScene::setUpGame()
 		float angle = random* PI * 100000;
 		enemy->position.x = SWIDTH / 2 + cos(angle)*radius;
 		enemy->position.y = SHEIGHT / 2 + sin(angle)*radius;
-		enemy->scale = Point2(1, 1);
+		enemy->scale = Point2(0.5, 0.5);
 		enemylist.push_back(enemy);
-		enemy->randomTopspeed();
-		std::cout << random << std::endl;
-
-	}
+		//enemy->randomTopspeed();
 		
-
+	}
 }
-

@@ -36,7 +36,12 @@ private:
 	/// @brief a Timer to rotate the color every n seconds
 	Timer t;
 	std::vector<Enemy*> enemylist;
+
 	float radius;
+	void enemySeperation();
+	Vector2 averagePos;
+	Point2 v;
+	int neighborCount;
 };
 
 #endif /* SCENE00_H */

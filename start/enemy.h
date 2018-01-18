@@ -22,22 +22,26 @@ public:
 	/// @return void
 	virtual void update(float deltaTime);
 	void addForce(Vector2 force);
-	void seperation();
-	void randomTopspeed();
-	Vector3 seek();
+	Vector3 seek(Vector3 target);
 	Vector3 pursue();
+	Vector3 separate(std::vector<Enemy*> enemy);
+	Vector3 velocity;
+
 	//std::vector<Enemy*> enemylist;
 	int enemieslength = 5;
 
 private:
-	Vector3 velocity;
 	Vector3 acceleration;
 	Vector3 dir;
 	Vector3 desiredVelocity;
 	Vector3 steering;
+	Vector3 seperationSteering;
+	Vector3 steeringForce;
 	SpaceShip *spaceship;
 	float topspeed;
 	float maxSteeringForce;
+	int seperationStrength;
+	
 
 };
 #endif
