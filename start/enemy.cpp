@@ -1,7 +1,7 @@
 /**
-* The class of the spaceship.
+* The class of the enemy.
 *
-* Copyright 2017 Julia Lameijer
+* Copyright 2018 Julia Lameijer
 */
 
 #include "enemy.h"
@@ -13,11 +13,12 @@ Enemy::Enemy(SpaceShip *spaceship) : Entity()
 	this->acceleration = Vector2(-0.001, -0.01);
 	this->spaceship = spaceship;
 	this->maxSteeringForce = 0.005;
-	this->topspeed = 0.4;
-	this->seperationStrength = 0.5;
-	
-	
+	this->topspeed = 0.5;
+	this->maxSteeringForce = 0.005;
+	this->seperationStrength = 0.3f;
+
 }
+
 Enemy::~Enemy()
 {
 
@@ -25,23 +26,18 @@ Enemy::~Enemy()
 void Enemy::update(float deltaTime)
 {
 	//Turn towards the player
-	this->rotation.z = velocity.getAngle(); 
+	this->rotation.z = velocity.getAngle();
 
-	//if (this->position.x >= SWIDTH  || this->position.x <0 || this->position.y <= SHEIGHT ||this->position.x >0) {
-	//	this->seperationStrength = 0;
-	//	std::cout << seperationStrength << std::endl;
-
-	//}
-	//else (this->seperationStrength = 0.5);
-	
-	if (this->position.x < 0) { this->position.x = SWIDTH; }
-	if (this->position.x > SWIDTH) { this->position.x = 0; }
-	if (this->position.y < 0) { this->position.y = SHEIGHT; }
-	if (this->position.y > SHEIGHT) { this->position.y = 0; }
-
+	if (this->position.x -10 >= SWIDTH || this->position.x +10 < 0 || this->position.y  -10>= SHEIGHT || this->position.y +10< 0) {
+		this->seperationStrength = 0;
+		
+	}
+	else { this->seperationStrength = 0.4f;
+	}
+			
 	//go after the player
 	steeringForce = Vector3(0,0,0);
-	steeringForce += seperationSteering * 0.5;
+	steeringForce += seperationSteering * this->seperationStrength;
 	steeringForce += pursue() * 1;
 	
 	steeringForce.limit(maxSteeringForce);
@@ -49,8 +45,10 @@ void Enemy::update(float deltaTime)
 	velocity += acceleration;
 	velocity.normalize();
 	velocity.limit(topspeed);
-	position += velocity;
+	position += velocity; 
 	acceleration = Vector2(0, 0);
+
+
 
 	
 }
@@ -80,7 +78,7 @@ Vector3 Enemy::separate(std::vector<Enemy*> list)
 	for each (Enemy* e in list) {
 		if (e != this) {
 			Vector2 length = e->position - this->position;
-			if (length.getLength() < 150) {
+			if (length.getLength() < 250) {
 				count++;
 				Vector2 diff = this->position - e->position;
 				diff.normalize();
@@ -96,17 +94,6 @@ Vector3 Enemy::separate(std::vector<Enemy*> list)
 	}
 	return Vector3();
 }
-
-//void Enemy::randomTopspeed()
-//{
-//	float random = rand() % 100;
-//	//std::cout << random << std::endl;
-//	if (random / 120 >= 0.2 && random / 120 <= 0.5) {
-//		this->topspeed = random / 120;
-//		std::cout << topspeed << std::endl;
-//	}
-//	else randomTopspeed();
-//}
 
 Vector3 Enemy::seek(Vector3 target)
 {

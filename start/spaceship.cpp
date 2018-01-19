@@ -31,7 +31,7 @@ void SpaceShip::update(float deltaTime)
 	this->velocity += acceleration;
 	this->velocity.limit(topspeed);
 	this->position += velocity;
-	this->acceleration * 0;
+	this->acceleration = Vector2(0,0);	
 
 	//Comes back at the other side of the screen after going out
 	if (this->position.x < 0) { this->position.x = SWIDTH; }

@@ -15,6 +15,7 @@ MyScene::MyScene() : Scene()
 	t.start();
 	this->averagePos = Vector2(0, 0);
 	spaceship = new SpaceShip();
+	bullet = new bulletScript();
 	srand(time(NULL));
 	v = Point2(0, 0);
 	radius = 1000;
@@ -27,6 +28,10 @@ MyScene::~MyScene(){
 	//destructor
 	this->removeChild(spaceship);
 	delete spaceship;
+
+	for each (bullet in bulletlist) {
+		delete bullet;
+	}
 
 	for each(enemy in enemylist) {
 		this->removeChild(enemy);
@@ -42,7 +47,6 @@ void MyScene::update(float deltaTime)
 	for each (enemy in enemylist) {
 		enemy->separate(enemylist);
 	}
-	
 }
 
 void MyScene::setUpGame()
@@ -61,9 +65,8 @@ void MyScene::setUpGame()
 		float angle = random* PI * 100000;
 		enemy->position.x = SWIDTH / 2 + cos(angle)*radius;
 		enemy->position.y = SHEIGHT / 2 + sin(angle)*radius;
-		enemy->scale = Point2(0.5, 0.5);
+		enemy->scale = Point2(0.32, 0.32);
 		enemylist.push_back(enemy);
-		//enemy->randomTopspeed();
 		
 	}
 }

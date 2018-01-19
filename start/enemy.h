@@ -25,10 +25,11 @@ public:
 	Vector3 seek(Vector3 target);
 	Vector3 pursue();
 	Vector3 separate(std::vector<Enemy*> enemy);
+	//void randomTopspeed();
 	Vector3 velocity;
 
 	//std::vector<Enemy*> enemylist;
-	int enemieslength = 5;
+	//int enemieslength = 5;
 
 private:
 	Vector3 acceleration;
@@ -40,7 +41,7 @@ private:
 	SpaceShip *spaceship;
 	float topspeed;
 	float maxSteeringForce;
-	int seperationStrength;
+	double seperationStrength;
 	
 
 };
