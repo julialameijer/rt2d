@@ -12,7 +12,7 @@
 #include <rt2d/scene.h>
 #include "spaceship.h"
 #include "enemy.h"
-#include "bulletScript.h"
+#include "bomb.h"
 
 /// @brief The MyScene class is the Scene implementation.
 class MyScene : public Scene
@@ -34,11 +34,10 @@ private:
 	/// @brief the rotating square in the middle of the screen
 	SpaceShip* spaceship;
 	Enemy* enemy;
-	bulletScript* bullet;
 	/// @brief a Timer to rotate the color every n seconds
 	Timer t;
 	std::vector<Enemy*> enemylist;
-
+	std::vector<Bomb*> bomblist;
 	float radius;
 
 	Vector2 averagePos;

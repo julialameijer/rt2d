@@ -14,6 +14,7 @@ Enemy::Enemy(SpaceShip *spaceship) : Entity()
 	this->spaceship = spaceship;
 	this->maxSteeringForce = 0.005;
 	this->topspeed = 0.5;
+	this->speed = 300;
 	this->maxSteeringForce = 0.005;
 	this->seperationStrength = 0.3f;
 
@@ -45,17 +46,24 @@ void Enemy::update(float deltaTime)
 	velocity += acceleration;
 	velocity.normalize();
 	velocity.limit(topspeed);
-	position += velocity; 
+	position += velocity *deltaTime * speed;
+	//std::cout<<position<<std::endl;
 	acceleration = Vector2(0, 0);
-
-
-
-	
 }
 
 void Enemy::addForce(Vector2 force)
 {
 	this->acceleration += force;
+}
+
+void Enemy::damage()
+{
+	int health = 2;
+	health -= 1;
+	if (health <= 0) {
+		removeChild(this);
+	}
+
 }
 
 Vector3 Enemy::pursue()

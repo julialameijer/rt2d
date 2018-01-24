@@ -15,7 +15,7 @@ MyScene::MyScene() : Scene()
 	t.start();
 	this->averagePos = Vector2(0, 0);
 	spaceship = new SpaceShip();
-	bullet = new bulletScript();
+	
 	srand(time(NULL));
 	v = Point2(0, 0);
 	radius = 1000;
@@ -28,11 +28,11 @@ MyScene::~MyScene(){
 	//destructor
 	this->removeChild(spaceship);
 	delete spaceship;
+	for (int i = 0; i < bomblist.size(); i++) {
+		this->removeChild(bomblist[i]);
+		delete bomblist[i];
 
-	for each (bullet in bulletlist) {
-		delete bullet;
 	}
-
 	for each(enemy in enemylist) {
 		this->removeChild(enemy);
 		delete enemy;
@@ -46,6 +46,30 @@ void MyScene::update(float deltaTime)
 	}
 	for each (enemy in enemylist) {
 		enemy->separate(enemylist);
+	}
+	if (input()->getKeyDown(J)) {
+		if (bomblist.size() != 2) {
+			////Adds bomb to screen
+			Bomb *singleBomb = new Bomb;
+			this->addChild(singleBomb);
+			singleBomb->position = spaceship->position;
+			singleBomb->scale = Point2(2, 2);
+
+			////Adds bomb to arraylist
+			bomblist.push_back(singleBomb);
+
+			////Function in bomb that starts the timer
+			singleBomb->explode();
+		}
+		else(std::cout << "too much bombs" << std::endl);
+	}
+
+	////Checks if it is exploded, and calls the function that get the enemies killed
+	for each(Bomb* b in bomblist) {
+		if (b->exploded) {
+			b->checkNeighbors(enemylist, 125);
+			b->exploded = false;
+		}
 	}
 }
 
