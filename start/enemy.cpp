@@ -17,6 +17,7 @@ Enemy::Enemy(SpaceShip *spaceship) : Entity()
 	this->speed = 300;
 	this->maxSteeringForce = 0.005;
 	this->seperationStrength = 0.3f;
+	this->health = 2;
 
 }
 
@@ -58,12 +59,12 @@ void Enemy::addForce(Vector2 force)
 
 void Enemy::damage()
 {
-	int health = 2;
-	health -= 1;
-	if (health <= 0) {
-		removeChild(this);
-	}
+	health -= 2;
+}
 
+int Enemy::getHealth()
+{
+	return health;
 }
 
 Vector3 Enemy::pursue()

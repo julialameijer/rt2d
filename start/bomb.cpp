@@ -29,11 +29,9 @@ void Bomb::explode()
 void Bomb::checkNeighbors(std::vector<Enemy*> list, int radius) {
 	for each (Enemy* e in list) {
 		Vector2 length = e->position - this->position;
-		if (length.getLength() >= 256) {
+		if (length.getLength() >= radius) {
 			std::cout << "outcircle" << std::endl;
-			break;
-		}
-		else { enemy->damage(); }
+		} else e->damage();
 	}
 }
 

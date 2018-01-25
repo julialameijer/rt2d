@@ -23,7 +23,6 @@ MyScene::MyScene() : Scene()
 	setUpGame();
 }
 
-
 MyScene::~MyScene(){
 	//destructor
 	this->removeChild(spaceship);
@@ -44,16 +43,14 @@ void MyScene::update(float deltaTime)
 	if (input()->getKeyUp(KeyCode::Escape)) {
 		this->stop();
 	}
-	for each (enemy in enemylist) {
-		enemy->separate(enemylist);
-	}
-	if (input()->getKeyDown(J)) {
-		if (bomblist.size() != 2) {
+	
+	if (input()->getKeyDown(Space)) {
+		if (bomblist.size() != 5) {
 			////Adds bomb to screen
 			Bomb *singleBomb = new Bomb;
 			this->addChild(singleBomb);
 			singleBomb->position = spaceship->position;
-			singleBomb->scale = Point2(2, 2);
+			singleBomb->scale = Point2(0.5, 0.5);
 
 			////Adds bomb to arraylist
 			bomblist.push_back(singleBomb);
@@ -67,8 +64,16 @@ void MyScene::update(float deltaTime)
 	////Checks if it is exploded, and calls the function that get the enemies killed
 	for each(Bomb* b in bomblist) {
 		if (b->exploded) {
-			b->checkNeighbors(enemylist, 125);
+			b->checkNeighbors(enemylist, 64);	
+			this->removeChild(b);
 			b->exploded = false;
+		}
+	}
+	for each (Enemy* e in enemylist) {
+		enemy->separate(enemylist);
+		if (e->getHealth() <= 0) {
+			std::cout << "health" << std::endl;
+			this->removeChild(e);
 		}
 	}
 }
@@ -76,11 +81,9 @@ void MyScene::update(float deltaTime)
 void MyScene::setUpGame()
 {
 	//The start of the game
-	spaceship->scale = Point2(0.5, 0.5);
+	spaceship->scale = Point2(1, 1);
 	spaceship->position = Point2(SWIDTH / 2, SHEIGHT / 2);
 	this->addChild(spaceship);
-	
-
 	for (size_t i = 0; i <5; i++)
 	{
 		enemy = new Enemy(spaceship);
@@ -91,6 +94,5 @@ void MyScene::setUpGame()
 		enemy->position.y = SHEIGHT / 2 + sin(angle)*radius;
 		enemy->scale = Point2(0.32, 0.32);
 		enemylist.push_back(enemy);
-		
 	}
 }

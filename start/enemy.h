@@ -23,6 +23,7 @@ public:
 	virtual void update(float deltaTime);
 	void addForce(Vector2 force);
 	void damage();
+	int getHealth();
 	Vector3 seek(Vector3 target);
 	Vector3 pursue();
 	Vector3 separate(std::vector<Enemy*> enemy);
@@ -44,6 +45,7 @@ private:
 	float speed;
 	float maxSteeringForce;
 	double seperationStrength;
+	int health;
 	
 
 };
