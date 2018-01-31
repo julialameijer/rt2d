@@ -50,7 +50,7 @@ void MyScene::update(float deltaTime)
 			Bomb *singleBomb = new Bomb;
 			this->addChild(singleBomb);
 			singleBomb->position = spaceship->position;
-			singleBomb->scale = Point2(0.5, 0.5);
+			singleBomb->scale = Point2(1, 1);
 
 			////Adds bomb to arraylist
 			bomblist.push_back(singleBomb);
@@ -60,7 +60,7 @@ void MyScene::update(float deltaTime)
 		}
 		else(std::cout << "too much bombs" << std::endl);
 	}
-
+	
 	////Checks if it is exploded, and calls the function that get the enemies killed
 	for each(Bomb* b in bomblist) {
 		if (b->exploded) {
@@ -73,7 +73,7 @@ void MyScene::update(float deltaTime)
 		enemy->separate(enemylist);
 		if (e->getHealth() <= 0) {
 			std::cout << "health" << std::endl;
-			this->removeChild(e);
+			e->position = Point2(-200, -200);
 		}
 	}
 }
@@ -92,7 +92,7 @@ void MyScene::setUpGame()
 		float angle = random* PI * 100000;
 		enemy->position.x = SWIDTH / 2 + cos(angle)*radius;
 		enemy->position.y = SHEIGHT / 2 + sin(angle)*radius;
-		enemy->scale = Point2(0.32, 0.32);
+		enemy->scale = Point2(0.2, 0.2);
 		enemylist.push_back(enemy);
 	}
 }

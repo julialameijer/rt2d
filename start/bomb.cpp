@@ -14,7 +14,7 @@ Bomb::~Bomb()
 
 void Bomb::update(float deltaTime)
 {
-	if (bombtimer.seconds() >= 7) {
+	if (bombtimer.seconds() >= 3) {
 		std::cout << bombtimer.seconds() << std::endl;
 		exploded = true;
 		bombtimer.stop();

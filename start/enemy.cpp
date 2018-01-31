@@ -30,16 +30,23 @@ void Enemy::update(float deltaTime)
 	//Turn towards the player
 	this->rotation.z = velocity.getAngle();
 
-	if (this->position.x -10 >= SWIDTH || this->position.x +10 < 0 || this->position.y  -10>= SHEIGHT || this->position.y +10< 0) {
-		this->seperationStrength = 0;
-		
-	}
-	else { this->seperationStrength = 0.4f;
-	}
+	//if (this->position.x -10 >= SWIDTH || this->position.x +10 < 0 || this->position.y  -10>= SHEIGHT || this->position.y +10< 0) {
+	//	this->seperationStrength = 0;
+	//	
+	//}
+	//else { this->seperationStrength = 0.4f;
+	//}
+
+	if (this->position.x < 0) { this->position.x = SWIDTH; }
+	if (this->position.x > SWIDTH) { this->position.x = 0; }
+	if (this->position.y < 0) { this->position.y = SHEIGHT; }
+	if (this->position.y > SHEIGHT) { this->position.y = 0; }
 			
 	//go after the player
 	steeringForce = Vector3(0,0,0);
 	steeringForce += seperationSteering * this->seperationStrength;
+	std::cout << seperationStrength << std::endl;
+
 	steeringForce += pursue() * 1;
 	
 	steeringForce.limit(maxSteeringForce);
@@ -87,7 +94,7 @@ Vector3 Enemy::separate(std::vector<Enemy*> list)
 	for each (Enemy* e in list) {
 		if (e != this) {
 			Vector2 length = e->position - this->position;
-			if (length.getLength() < 250) {
+			if (length.getLength() < 500) {
 				count++;
 				Vector2 diff = this->position - e->position;
 				diff.normalize();
