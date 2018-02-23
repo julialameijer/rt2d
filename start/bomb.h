@@ -17,7 +17,7 @@ public:
 	virtual ~Bomb();
 	virtual void update(float deltaTime);
 	void explode();
-	void checkNeighbors(std::vector<Enemy*> list, int radius);
+	void checkNeighbors(std::vector<Enemy*> list, SpaceShip* s, int radius);
 	bool exploded;
 
 private:

@@ -12,6 +12,7 @@ SpaceShip::SpaceShip() : Entity()
 	this->velocity = Vector2(0, 0);
 	this->acceleration = Vector2(0, 0);
 	this->topspeed = 0;
+	this->health = 1;
 	heading = 0;
 	r = 16;
 }
@@ -57,4 +58,15 @@ void SpaceShip::update(float deltaTime)
 	}
 	this->rotation.z = polar.angle;
 	this->position += velocity * deltaTime;
+
+}
+
+int SpaceShip::getHealth()
+{
+	return health;
+}
+
+void SpaceShip::damage()
+{
+	health -= 1;
 }

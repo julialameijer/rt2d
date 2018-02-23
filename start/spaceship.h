@@ -24,6 +24,8 @@ public:
 	/// @param deltaTime the elapsed time in seconds
 	/// @return void
 	virtual void update(float deltaTime);
+	int getHealth();
+	void damage();
 	Vector2 velocity;
 
 private:
@@ -33,6 +35,7 @@ private:
 	
 	float damping;
 	float topspeed;
+	float health;
 	float heading;
 	float angle;
 	float r;

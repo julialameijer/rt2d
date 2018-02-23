@@ -103,7 +103,7 @@ Vector3 Enemy::separate(std::vector<Enemy*> list)
 			if (count > 0) {
 				sum /= count;
 				steering = sum - velocity;
-				//steering.limit(maxSteeringForce);
+				steering.limit(maxSteeringForce);
 				seperationSteering = steering;
 			}
 		}

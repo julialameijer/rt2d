@@ -64,7 +64,7 @@ void MyScene::update(float deltaTime)
 	////Checks if it is exploded, and calls the function that get the enemies killed
 	for each(Bomb* b in bomblist) {
 		if (b->exploded) {
-			b->checkNeighbors(enemylist, 64);	
+			b->checkNeighbors(enemylist,spaceship ,64);	
 			this->removeChild(b);
 			b->exploded = false;
 		}
@@ -76,7 +76,12 @@ void MyScene::update(float deltaTime)
 			e->position = Point2(-200, -200);
 		}
 	}
-}
+	if (spaceship->getHealth() <= 0) {
+		std::cout << "spaceshiphealth" << std::endl;
+		this->removeChild(spaceship);
+		this->stop()
+	}
+}	
 
 void MyScene::setUpGame()
 {
